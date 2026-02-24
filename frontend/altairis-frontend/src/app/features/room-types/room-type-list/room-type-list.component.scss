@@ -1,0 +1,21 @@
+.filter-field { width: 100%; max-width: 400px; margin-bottom: 20px; }
+.header-actions { display: flex; gap: 8px; }
+.hotel-context {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 16px; margin-bottom: 16px;
+  background: var(--accent-subtle); border-radius: 8px;
+  font-weight: 600; font-size: 0.9rem; color: var(--accent);
+}
+.hotel-context mat-icon { font-size: 20px; width: 20px; height: 20px; }
+.category-tag { font-size: 0.8rem; color: var(--text-muted); }
+.rooms-badge {
+  display: inline-block; padding: 3px 10px; border-radius: 20px;
+  font-size: 0.8rem; font-weight: 600;
+  background: var(--color-info-light); color: var(--color-info-dark);
+}
+.capacity-badge {
+  display: inline-block; padding: 3px 10px; border-radius: 20px;
+  font-size: 0.8rem; font-weight: 500;
+  background: var(--accent-subtle); color: var(--accent);
+}
+table { width: 100%; }

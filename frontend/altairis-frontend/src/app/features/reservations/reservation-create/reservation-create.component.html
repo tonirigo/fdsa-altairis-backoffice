@@ -1,0 +1,71 @@
+<div class="page-container">
+  <button mat-button class="back-link" (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon> {{ returnLabel }}
+  </button>
+  <h2>Create Reservation</h2>
+  <p class="page-subtitle">Book rooms for a guest</p>
+
+  <mat-card>
+    <mat-card-content>
+      <form #resForm="ngForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Hotel</mat-label>
+          <mat-select [(ngModel)]="selectedHotelId" name="hotelId" required (selectionChange)="onHotelChange()" aria-label="Select hotel for reservation">
+            @for (hotel of hotelStore.hotels(); track hotel.id) {
+              <mat-option [value]="hotel.id">{{ hotel.name }}</mat-option>
+            }
+          </mat-select>
+          <mat-error>Please select a hotel</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Room Type</mat-label>
+          <mat-select [(ngModel)]="selectedRoomTypeId" name="roomTypeId" required aria-label="Select room type">
+            @for (rt of roomTypeStore.roomTypes(); track rt.id) {
+              <mat-option [value]="rt.id">{{ rt.name }} ({{ rt.capacity }} guests)</mat-option>
+            }
+          </mat-select>
+          <mat-error>Please select a room type</mat-error>
+        </mat-form-field>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Check-in</mat-label>
+            <input matInput [matDatepicker]="checkinPicker" [(ngModel)]="checkInDate" name="checkIn" required aria-label="Check-in date">
+            <mat-datepicker-toggle matIconSuffix [for]="checkinPicker"></mat-datepicker-toggle>
+            <mat-datepicker #checkinPicker></mat-datepicker>
+            <mat-error>Check-in date is required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Check-out</mat-label>
+            <input matInput [matDatepicker]="checkoutPicker" [(ngModel)]="checkOutDate" name="checkOut" required aria-label="Check-out date">
+            <mat-datepicker-toggle matIconSuffix [for]="checkoutPicker"></mat-datepicker-toggle>
+            <mat-datepicker #checkoutPicker></mat-datepicker>
+            <mat-error>Check-out date is required</mat-error>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Guest Name</mat-label>
+          <input matInput [(ngModel)]="guestName" name="guestName" required aria-label="Guest name">
+          <mat-error>Guest name is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Number of Rooms</mat-label>
+          <input matInput type="number" [(ngModel)]="roomsBooked" name="roomsBooked" required min="1" aria-label="Number of rooms to book">
+          <mat-error>Number of rooms is required</mat-error>
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button mat-button type="button" (click)="goBack()">Cancel</button>
+          <button mat-raised-button color="primary" type="submit"
+            [disabled]="!resForm.valid || !selectedRoomTypeId || submitting">
+            <mat-icon>save</mat-icon> Save Reservation
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

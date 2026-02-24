@@ -1,0 +1,5 @@
+table { width: 100%; }
+.inline-form {
+  display: flex; align-items: center; gap: 12px;
+  margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border-light);
+}

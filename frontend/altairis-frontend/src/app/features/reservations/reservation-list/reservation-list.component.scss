@@ -1,0 +1,13 @@
+.filter-bar {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.filter-bar mat-form-field {
+  min-width: 180px;
+}
+table { width: 100%; }
+.confirm-btn { color: var(--color-success); }
+.cancel-btn { color: var(--color-danger); }

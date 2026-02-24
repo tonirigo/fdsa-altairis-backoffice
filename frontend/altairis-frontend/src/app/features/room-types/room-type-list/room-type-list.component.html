@@ -1,0 +1,84 @@
+<div class="page-container">
+  <div class="page-header">
+    <div>
+      <h2>Room Types</h2>
+      <p class="page-subtitle">Configure room categories per hotel</p>
+    </div>
+    <div class="header-actions">
+      @if (selectedHotelId) {
+        <button mat-stroked-button (click)="router.navigate(['/inventory'], { queryParams: { hotelId: selectedHotelId } })">
+          <mat-icon>event_available</mat-icon> View Inventory
+        </button>
+      }
+      <button mat-raised-button color="primary" (click)="router.navigate(['/room-types/create'], { queryParams: { hotelId: selectedHotelId } })">
+        <mat-icon>add</mat-icon> New Room Type
+      </button>
+    </div>
+  </div>
+
+  @if (roomTypeStore.error(); as error) {
+    <div class="error-banner">
+      <mat-icon>error_outline</mat-icon>
+      <span>{{ error }}</span>
+    </div>
+  }
+
+  <mat-form-field appearance="outline" class="filter-field">
+    <mat-label>Select Hotel</mat-label>
+    <mat-select [(ngModel)]="selectedHotelId" (selectionChange)="onHotelChange()" aria-label="Filter by hotel">
+      @for (hotel of hotelStore.hotels(); track hotel.id) {
+        <mat-option [value]="hotel.id">{{ hotel.name }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  @if (roomTypeStore.loading()) {
+    <mat-spinner diameter="40"></mat-spinner>
+  }
+
+  @if (selectedHotelId && !roomTypeStore.loading() && roomTypeStore.roomTypes().length === 0) {
+    <div class="empty-state">
+      <mat-icon>bedroom_child</mat-icon>
+      <p>No room types found for this hotel</p>
+    </div>
+  }
+
+  @if (selectedHotelId && getSelectedHotelName(); as hotelName) {
+    <div class="hotel-context">
+      <mat-icon>apartment</mat-icon>
+      <span>{{ hotelName }}</span>
+    </div>
+  }
+
+  @if (selectedHotelId) {
+    <table mat-table [dataSource]="roomTypeStore.roomTypes()">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let rt">
+          <span class="cell-primary">{{ rt.name }}</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="categoryName">
+        <th mat-header-cell *matHeaderCellDef>Category</th>
+        <td mat-cell *matCellDef="let rt">
+          <span class="category-tag">{{ rt.categoryName || '—' }}</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="totalRooms">
+        <th mat-header-cell *matHeaderCellDef>Rooms</th>
+        <td mat-cell *matCellDef="let rt">
+          <span class="rooms-badge">{{ rt.totalRooms }}</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="capacity">
+        <th mat-header-cell *matHeaderCellDef>Capacity</th>
+        <td mat-cell *matCellDef="let rt">
+          <span class="capacity-badge">{{ rt.capacity }} guests</span>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  }
+</div>

@@ -1,0 +1,285 @@
+@use '@angular/material' as mat;
+
+:root {
+  --bg-main: #f5f3ef;
+  --bg-card: #ffffff;
+  --bg-sidebar: #1b1f2b;
+  --bg-toolbar: #1b1f2b;
+  --bg-table-header: #f0ede7;
+  --bg-table-hover: #f9f7f3;
+
+  --accent: #c0913c;
+  --accent-light: #d4a853;
+  --accent-subtle: rgba(192, 145, 60, 0.08);
+  --accent-border: rgba(192, 145, 60, 0.25);
+
+  --text-dark: #1a1a1a;
+  --text-body: #3d3d3d;
+  --text-muted: #8a8a8a;
+  --text-on-dark: #e8e6e3;
+  --text-on-dark-muted: #9b9a97;
+
+  --border: #e5e2dc;
+  --border-light: #eeebe5;
+
+  --status-confirmed: #2e7d32;
+  --status-confirmed-bg: #e8f5e9;
+  --status-pending: #e65100;
+  --status-pending-bg: #fff3e0;
+  --status-cancelled: #c62828;
+  --status-cancelled-bg: #ffebee;
+
+  --color-success: #4caf50;
+  --color-success-light: #e8f5e9;
+  --color-success-dark: #2e7d32;
+  --color-warning: #ff9800;
+  --color-warning-light: #fff8e1;
+  --color-warning-dark: #f57f17;
+  --color-danger: #f44336;
+  --color-danger-light: #fce4ec;
+  --color-danger-dark: #c62828;
+  --color-info: #1e88e5;
+  --color-info-light: #e3f2fd;
+  --color-info-dark: #1565c0;
+  --color-purple: #8e24aa;
+  --color-purple-light: rgba(142, 36, 170, 0.1);
+
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+  --shadow-elevated: 0 4px 24px rgba(0,0,0,0.08);
+
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+}
+
+html {
+  height: 100%;
+  @include mat.theme((
+    color: (
+      primary: mat.$yellow-palette,
+      tertiary: mat.$orange-palette,
+    ),
+    typography: 'DM Sans',
+    density: 0,
+  ));
+}
+
+body {
+  color-scheme: light;
+  background-color: var(--bg-main);
+  color: var(--text-body);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Global Typography ─── */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  color: var(--text-dark);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+h2 {
+  font-size: 1.75rem;
+  margin: 0 0 8px;
+}
+
+h3 {
+  font-size: 1.25rem;
+  margin: 24px 0 12px;
+}
+
+/* ─── Custom Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+/* ─── Angular Material Overrides ─── */
+
+/* Tables */
+.mat-mdc-table {
+  background: var(--bg-card) !important;
+  border-radius: var(--radius) !important;
+  overflow: hidden;
+  border: 1px solid var(--border-light) !important;
+  box-shadow: none !important;
+}
+
+.mat-mdc-header-row {
+  background: var(--bg-table-header) !important;
+}
+
+.mat-mdc-header-cell {
+  color: var(--text-muted) !important;
+  font-family: var(--font-body) !important;
+  font-weight: 600 !important;
+  font-size: 0.75rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.06em !important;
+  border-bottom-color: var(--border) !important;
+}
+
+.mat-mdc-cell {
+  color: var(--text-body) !important;
+  font-family: var(--font-body) !important;
+  font-size: 0.875rem !important;
+  border-bottom-color: var(--border-light) !important;
+}
+
+.mat-mdc-row:hover {
+  background: var(--bg-table-hover) !important;
+}
+
+.mat-mdc-row:last-child .mat-mdc-cell {
+  border-bottom: none !important;
+}
+
+/* Cards */
+.mat-mdc-card {
+  background: var(--bg-card) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: var(--shadow-card) !important;
+  border: 1px solid var(--border-light);
+}
+
+/* Form fields */
+.mat-mdc-form-field {
+  font-family: var(--font-body) !important;
+}
+
+/* Buttons */
+.mat-mdc-raised-button.mat-primary,
+.mat-mdc-unelevated-button.mat-primary {
+  background-color: var(--accent) !important;
+  color: #fff !important;
+  font-family: var(--font-body) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
+  border-radius: var(--radius-sm) !important;
+  box-shadow: none !important;
+
+  &:hover {
+    background-color: var(--accent-light) !important;
+  }
+}
+
+/* Spinner */
+.mat-mdc-progress-spinner circle {
+  stroke: var(--accent) !important;
+}
+
+/* ─── Status Badges ─── */
+.status-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: capitalize;
+}
+
+.status-confirmed {
+  background: var(--status-confirmed-bg);
+  color: var(--status-confirmed);
+}
+
+.status-pending {
+  background: var(--status-pending-bg);
+  color: var(--status-pending);
+}
+
+.status-cancelled {
+  background: var(--status-cancelled-bg);
+  color: var(--status-cancelled);
+}
+
+/* ─── Animations ─── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-in {
+  animation: fadeInUp 0.4s ease-out both;
+}
+
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.1s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.2s; }
+
+/* ─── Page Layout Utilities ─── */
+.page-container {
+  padding: 32px 40px;
+  max-width: 1400px;
+  animation: fadeInUp 0.35s ease-out both;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.page-header h2 {
+  margin: 0;
+}
+
+.page-subtitle {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin: -4px 0 24px;
+}
+
+/* ─── Shared Component Utilities ─── */
+.cell-primary { font-weight: 600; color: var(--text-dark); }
+.table-scroll-container { max-height: 60vh; overflow-y: auto; }
+
+.error-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  background: var(--color-danger-light);
+  color: var(--color-danger-dark);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  mat-icon { font-size: 20px; width: 20px; height: 20px; }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 48px 24px;
+  color: var(--text-muted);
+  text-align: center;
+  border: 1px dashed var(--border-light);
+  border-radius: 8px;
+  mat-icon { font-size: 48px; width: 48px; height: 48px; opacity: 0.4; }
+  p { margin: 0; font-size: 0.9rem; }
+}

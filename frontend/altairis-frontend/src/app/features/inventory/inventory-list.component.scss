@@ -1,0 +1,65 @@
+.filter-field { width: 100%; max-width: 400px; margin-bottom: 8px; }
+
+.hotel-context {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 16px; margin-bottom: 16px;
+  background: var(--accent-subtle); border-radius: 8px;
+  font-weight: 600; font-size: 0.9rem; color: var(--accent);
+}
+.hotel-context mat-icon { font-size: 20px; width: 20px; height: 20px; }
+.context-link {
+  margin-left: auto; font-size: 0.8rem; color: var(--text-muted);
+  mat-icon { font-size: 16px; width: 16px; height: 16px; margin-right: 4px; }
+}
+
+.grid-nav {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 16px;
+}
+.grid-range {
+  font-weight: 600; font-size: 0.95rem; color: var(--text-dark); min-width: 200px; text-align: center;
+}
+.today-btn { font-size: 0.8rem; }
+
+.grid-scroll { overflow-x: auto; }
+
+.inv-grid {
+  width: 100%; border-collapse: collapse;
+  border: 1px solid var(--border-light); border-radius: 8px; overflow: hidden;
+}
+.inv-grid thead { background: var(--bg-main); }
+.inv-grid th, .inv-grid td {
+  padding: 10px 8px; text-align: center; border: 1px solid var(--border-light);
+}
+.room-col {
+  text-align: left !important; min-width: 180px; padding-left: 16px !important;
+  position: sticky; left: 0; background: var(--bg-card); z-index: 1;
+}
+thead .room-col { background: var(--bg-main); z-index: 2; }
+.room-name { font-weight: 600; color: var(--text-dark); font-size: 0.875rem; }
+.room-meta { font-size: 0.75rem; color: var(--text-muted); }
+
+.date-col { min-width: 72px; }
+.date-day { font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600; }
+.date-num { font-size: 1rem; font-weight: 600; color: var(--text-dark); }
+
+.today { background: rgba(192, 145, 60, 0.06) !important; }
+thead .today { border-bottom: 2px solid var(--accent); }
+
+.cell { cursor: default; transition: background 0.15s; }
+.cell:hover { filter: brightness(0.95); }
+.cell-avail { font-weight: 700; font-size: 0.95rem; }
+.cell-total { font-size: 0.75rem; color: var(--text-muted); }
+.cell-none { color: var(--text-muted); font-size: 0.8rem; }
+
+.cell-ok { background: var(--color-success-light); }
+.cell-ok .cell-avail { color: var(--color-success-dark); }
+.cell-warn { background: var(--color-warning-light); }
+.cell-warn .cell-avail { color: var(--color-warning-dark); }
+.cell-danger { background: var(--color-danger-light); }
+.cell-danger .cell-avail { color: var(--color-danger-dark); }
+.cell-empty { background: var(--bg-main); }
+
+.empty-state {
+  padding: 40px; text-align: center; color: var(--text-muted);
+  border: 1px dashed var(--border-light); border-radius: 8px;
+}

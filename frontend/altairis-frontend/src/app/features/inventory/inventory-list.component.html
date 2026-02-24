@@ -1,0 +1,101 @@
+<div class="page-container">
+  <div class="page-header">
+    <div>
+      <h2>Inventory</h2>
+      <p class="page-subtitle">Room availability overview</p>
+    </div>
+    <button mat-raised-button color="primary" (click)="router.navigate(['/reservations/create'], { queryParams: { hotelId: selectedHotelId, returnUrl: '/inventory' } })">
+      <mat-icon>book_online</mat-icon> New Reservation
+    </button>
+  </div>
+
+  @if (availabilityStore.error(); as error) {
+    <div class="error-banner">
+      <mat-icon>error_outline</mat-icon>
+      <span>{{ error }}</span>
+    </div>
+  }
+
+  <mat-form-field appearance="outline" class="filter-field">
+    <mat-label>Select Hotel</mat-label>
+    <mat-select [(ngModel)]="selectedHotelId" (selectionChange)="onHotelChange()" aria-label="Select hotel to view inventory">
+      @for (hotel of hotelStore.hotels(); track hotel.id) {
+        <mat-option [value]="hotel.id">{{ hotel.name }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  @if (availabilityStore.loading()) {
+    <mat-spinner diameter="40"></mat-spinner>
+  }
+
+  @if (selectedHotelId && getSelectedHotelName(); as hotelName) {
+    <div class="hotel-context">
+      <mat-icon>apartment</mat-icon>
+      <span>{{ hotelName }}</span>
+      <button mat-button class="context-link" (click)="router.navigate(['/room-types'], { queryParams: { hotelId: selectedHotelId } })">
+        <mat-icon>meeting_room</mat-icon> Room Types
+      </button>
+    </div>
+  }
+
+  @if (availabilityStore.grid(); as grid) {
+    <div class="grid-nav">
+      <button mat-icon-button (click)="prevWeek()" matTooltip="Previous week">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <span class="grid-range">
+        {{ grid.from | date:'MMM d' }} — {{ grid.to | date:'MMM d, y' }}
+      </span>
+      <button mat-icon-button (click)="nextWeek()" matTooltip="Next week">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+      <button mat-button class="today-btn" (click)="goToday()">Today</button>
+    </div>
+
+    @if (!grid.roomTypes || grid.roomTypes.length === 0) {
+      <div class="empty-state">No inventory data for this period. Use "New Inventory" to add availability.</div>
+    } @else {
+      <div class="grid-scroll">
+        <table class="inv-grid">
+          <thead>
+            <tr>
+              <th class="room-col">Room Type</th>
+              @for (cell of grid.roomTypes[0].dates; track cell.date) {
+                <th class="date-col" [class.today]="isToday(cell.date!)">
+                  <div class="date-day">{{ cell.date | date:'EEE' }}</div>
+                  <div class="date-num">{{ cell.date | date:'d' }}</div>
+                </th>
+              }
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of grid.roomTypes; track row.roomTypeId) {
+              <tr>
+                <td class="room-col">
+                  <div class="room-name">{{ row.roomTypeName }}</div>
+                  <div class="room-meta">{{ row.categoryName || '—' }} · {{ row.totalRooms }} rooms · {{ row.capacity }}p</div>
+                </td>
+                @for (cell of row.dates; track cell.date) {
+                  <td class="cell" [class.today]="isToday(cell.date!)"
+                      [class.cell-empty]="cell.totalRooms === 0"
+                      [class.cell-ok]="cell.totalRooms! > 0 && getOccupancyPct(cell) < 50"
+                      [class.cell-warn]="cell.totalRooms! > 0 && getOccupancyPct(cell) >= 50 && getOccupancyPct(cell) < 80"
+                      [class.cell-danger]="cell.totalRooms! > 0 && getOccupancyPct(cell) >= 80"
+                      [matTooltip]="getCellTooltip(row.roomTypeName!, cell)">
+                    @if (cell.totalRooms! > 0) {
+                      <span class="cell-avail">{{ cell.availableRooms }}</span>
+                      <span class="cell-total">/{{ cell.totalRooms }}</span>
+                    } @else {
+                      <span class="cell-none">—</span>
+                    }
+                  </td>
+                }
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  }
+</div>

@@ -1,0 +1,45 @@
+<div class="page-container">
+  <button mat-button class="back-link" (click)="router.navigate(['/hotels'])">
+    <mat-icon>arrow_back</mat-icon> Back to Hotels
+  </button>
+  <h2>Create Hotel</h2>
+  <p class="page-subtitle">Add a new property to your portfolio</p>
+
+  <mat-card>
+    <mat-card-content>
+      <form #hotelForm="ngForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Hotel Name</mat-label>
+          <input matInput [(ngModel)]="hotel.name" name="name" required aria-label="Hotel name">
+          <mat-error>Hotel name is required</mat-error>
+        </mat-form-field>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Country</mat-label>
+            <input matInput [(ngModel)]="hotel.country" name="country" required aria-label="Hotel country">
+            <mat-error>Country is required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>City</mat-label>
+            <input matInput [(ngModel)]="hotel.city" name="city" required aria-label="Hotel city">
+            <mat-error>City is required</mat-error>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Address</mat-label>
+          <input matInput [(ngModel)]="hotel.address" name="address" required aria-label="Hotel address">
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button mat-button type="button" (click)="router.navigate(['/hotels'])">Cancel</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="!hotelForm.valid || submitting">
+            <mat-icon>save</mat-icon> Save Hotel
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

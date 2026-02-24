@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Altairis.Api/Altairis.Api.csproj" />
+    <Project Path="src/Altairis.Application/Altairis.Application.csproj" />
+    <Project Path="src/Altairis.Domain/Altairis.Domain.csproj" />
+    <Project Path="src/Altairis.Infrastructure/Altairis.Infrastructure.csproj" />
+  </Folder>
+</Solution>

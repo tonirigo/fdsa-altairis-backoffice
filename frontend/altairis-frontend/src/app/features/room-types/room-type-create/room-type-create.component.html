@@ -1,0 +1,60 @@
+<div class="page-container">
+  <button mat-button class="back-link" (click)="router.navigate(['/room-types'], { queryParams: { hotelId: selectedHotelId } })">
+    <mat-icon>arrow_back</mat-icon> Back to Room Types
+  </button>
+  <h2>Create Room Type</h2>
+  <p class="page-subtitle">Define a new room category for a hotel</p>
+
+  <mat-card>
+    <mat-card-content>
+      <form #rtForm="ngForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Hotel</mat-label>
+          <mat-select [(ngModel)]="selectedHotelId" name="hotelId" required aria-label="Select hotel">
+            @for (hotel of hotelStore.hotels(); track hotel.id) {
+              <mat-option [value]="hotel.id">{{ hotel.name }}</mat-option>
+            }
+          </mat-select>
+          <mat-error>Please select a hotel</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Category</mat-label>
+          <mat-select [(ngModel)]="roomType.categoryId" name="categoryId" aria-label="Select room category">
+            <mat-option [value]="null">— None —</mat-option>
+            @for (cat of categoryStore.categories(); track cat.id) {
+              <mat-option [value]="cat.id">{{ cat.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Room Type Name</mat-label>
+          <input matInput [(ngModel)]="roomType.name" name="name" required aria-label="Room type name">
+          <mat-error>Room type name is required</mat-error>
+        </mat-form-field>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Total Rooms</mat-label>
+            <input matInput type="number" [(ngModel)]="roomType.totalRooms" name="totalRooms" required min="1" aria-label="Total number of rooms">
+            <mat-error>Total rooms is required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Capacity (guests)</mat-label>
+            <input matInput type="number" [(ngModel)]="roomType.capacity" name="capacity" required min="1" aria-label="Room capacity">
+            <mat-error>Capacity is required</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-actions">
+          <button mat-button type="button" (click)="router.navigate(['/room-types'], { queryParams: { hotelId: selectedHotelId } })">Cancel</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="!rtForm.valid || !selectedHotelId || submitting">
+            <mat-icon>save</mat-icon> Save
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

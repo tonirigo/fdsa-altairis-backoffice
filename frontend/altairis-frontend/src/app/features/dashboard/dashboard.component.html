@@ -1,0 +1,114 @@
+<div class="page-container">
+  <h2>Dashboard</h2>
+  <p class="page-subtitle">Overview of your hotel distribution operations</p>
+
+  @if (dashboardStore.error(); as error) {
+    <div class="error-banner">
+      <mat-icon>error_outline</mat-icon>
+      <span>{{ error }}</span>
+    </div>
+  }
+
+  @if (dashboardStore.loading()) {
+    <mat-spinner diameter="40"></mat-spinner>
+  }
+
+  @if (dashboardStore.summary(); as summary) {
+    <div class="stats-grid">
+      <div class="stat-card animate-in stagger-1">
+        <div class="stat-icon-wrap stat-icon--hotels">
+          <mat-icon>apartment</mat-icon>
+        </div>
+        <div class="stat-content">
+          <span class="stat-label">Total Hotels</span>
+          <span class="stat-value">{{ summary.totalHotels }}</span>
+        </div>
+      </div>
+
+      <div class="stat-card animate-in stagger-2">
+        <div class="stat-icon-wrap stat-icon--reservations">
+          <mat-icon>book_online</mat-icon>
+        </div>
+        <div class="stat-content">
+          <span class="stat-label">Reservations</span>
+          <span class="stat-value">{{ summary.totalReservations }}</span>
+        </div>
+      </div>
+
+      <div class="stat-card animate-in stagger-3">
+        <div class="stat-icon-wrap stat-icon--available">
+          <mat-icon>event_available</mat-icon>
+        </div>
+        <div class="stat-content">
+          <span class="stat-label">Available Today</span>
+          <span class="stat-value">{{ summary.availableRoomsToday }}</span>
+        </div>
+      </div>
+
+      <div class="stat-card animate-in stagger-4">
+        <div class="stat-icon-wrap stat-icon--occupancy">
+          <mat-icon>trending_up</mat-icon>
+        </div>
+        <div class="stat-content">
+          <span class="stat-label">Occupancy</span>
+          <span class="stat-value">{{ summary.occupancyPercentage | number:'1.1-1' }}%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="charts-grid">
+      <div class="chart-card animate-in stagger-5">
+        <h3>Occupancy by Hotel</h3>
+        <div class="bar-chart">
+          @for (hotel of summary.occupancyByHotel; track hotel.hotelName) {
+            <div class="bar-row">
+              <span class="bar-label" [title]="hotel.hotelName!">{{ hotel.hotelName }}</span>
+              <div class="bar-track">
+                <div class="bar-fill" [style.width.%]="hotel.occupancyPercentage"
+                     [class.bar-fill--low]="hotel.occupancyPercentage! < 40"
+                     [class.bar-fill--mid]="hotel.occupancyPercentage! >= 40 && hotel.occupancyPercentage! < 75"
+                     [class.bar-fill--high]="hotel.occupancyPercentage! >= 75">
+                </div>
+              </div>
+              <span class="bar-value">{{ hotel.occupancyPercentage | number:'1.0-0' }}%</span>
+            </div>
+          }
+          @if (!summary.occupancyByHotel || summary.occupancyByHotel.length === 0) {
+            <p class="no-data">No hotel data available</p>
+          }
+        </div>
+      </div>
+
+      <div class="chart-card animate-in stagger-6">
+        <h3>Reservations by Status</h3>
+        @if (summary.reservationsByStatus; as rbs) {
+          <div class="donut-container">
+            <div class="donut" [style.background]="getDonutGradient(rbs)">
+              <div class="donut-hole">
+                <span class="donut-total">{{ getTotalReservationsByStatus(rbs) }}</span>
+                <span class="donut-total-label">Total</span>
+              </div>
+            </div>
+            <div class="donut-legend">
+              <div class="legend-item">
+                <span class="legend-dot legend-dot--pending"></span>
+                <span class="legend-label">Pending</span>
+                <span class="legend-value">{{ rbs.pending }}</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot legend-dot--confirmed"></span>
+                <span class="legend-label">Confirmed</span>
+                <span class="legend-value">{{ rbs.confirmed }}</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot legend-dot--cancelled"></span>
+                <span class="legend-label">Cancelled</span>
+                <span class="legend-value">{{ rbs.cancelled }}</span>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

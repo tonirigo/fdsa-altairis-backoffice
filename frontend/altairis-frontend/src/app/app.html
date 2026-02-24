@@ -1,0 +1,60 @@
+<mat-sidenav-container class="shell">
+  <mat-sidenav #sidenav mode="side" opened class="sidebar">
+    <div class="brand">
+      <div class="brand-icon">
+        <mat-icon>auto_awesome</mat-icon>
+      </div>
+      <div class="brand-text">
+        <span class="brand-name">Altairis</span>
+        <span class="brand-sub">Backoffice</span>
+      </div>
+    </div>
+
+    <div class="nav-section-label">Main</div>
+    <nav>
+      <a routerLink="/dashboard" routerLinkActive="nav-active" class="nav-item">
+        <mat-icon>space_dashboard</mat-icon>
+        <span>Dashboard</span>
+      </a>
+      <a routerLink="/hotels" routerLinkActive="nav-active" class="nav-item">
+        <mat-icon>apartment</mat-icon>
+        <span>Hotels</span>
+      </a>
+      <a routerLink="/room-categories" routerLinkActive="nav-active" class="nav-item">
+        <mat-icon>category</mat-icon>
+        <span>Room Categories</span>
+      </a>
+      <a routerLink="/room-types" routerLinkActive="nav-active" class="nav-item">
+        <mat-icon>meeting_room</mat-icon>
+        <span>Room Types</span>
+      </a>
+    </nav>
+
+    <div class="nav-section-label">Operations</div>
+    <nav>
+      <a routerLink="/inventory" routerLinkActive="nav-active" class="nav-item">
+        <mat-icon>event_available</mat-icon>
+        <span>Inventory</span>
+      </a>
+      <a routerLink="/reservations" routerLinkActive="nav-active" class="nav-item">
+        <mat-icon>book_online</mat-icon>
+        <span>Reservations</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-footer-text">Altairis Distribution</div>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="main-content">
+    <header class="topbar">
+      <button mat-icon-button class="menu-toggle" (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </header>
+    <main>
+      <router-outlet />
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

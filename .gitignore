@@ -1,0 +1,30 @@
+# IDE
+.idea/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# OS
+.DS_Store
+Thumbs.db
+
+# .NET
+**/bin/
+**/obj/
+**/.vs/
+
+# Node / Angular
+**/node_modules/
+**/dist/
+**/.angular/
+
+# Docker
+sqlserver-data/
+
+# Claude Code
+.claude/
+
+# Misc
+*.log
