@@ -5,7 +5,7 @@ Panel de administración para la gestión hotelera de Altairis. Permite gestiona
 ## Stack
 
 - **Backend:** .NET 8 (Clean Architecture) con Entity Framework Core y SQL Server
-- **Frontend:** Angular 19 con Angular Material
+- **Frontend:** Angular 21 con Angular Material
 - **Base de datos:** SQL Server 2022
 - **Contenedores:** Docker Compose
 
